@@ -1,15 +1,17 @@
 import React from "react";
 import PropTypes from 'prop-types'
 
-const ListBooks = ({ books }) => {
+const ListBooks = ({ books, categories }) => {
   return (
     <ol>
-      {books.map(book => (
-        <li key={book.id}>
-          <img src={book.imageLinks["thumbnail"]} alt={book.title} />
-          <h5>{book.title}</h5>
-          <p>{book.authors[0]}</p>
-        </li>
+      {books
+        .filter(book => { return categories.includes(book.category) })
+        .map(book => (
+          <li key={book.id}>
+            <h5>{book.title}</h5>
+            <img src={book.imageLinks["thumbnail"]} alt={book.title} />
+            <p>{book.authors.join(", ")}</p>
+          </li>
       ))}
     </ol>
   );
@@ -17,6 +19,7 @@ const ListBooks = ({ books }) => {
 
 ListBooks.propTypes = {
   books: PropTypes.array.isRequired,
+  categories: PropTypes.array.isRequired,
 };
 
 
