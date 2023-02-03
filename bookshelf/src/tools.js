@@ -1,6 +1,6 @@
 export const noAssigned = "no assigned";
-export const currentlyReading = "currently reading";
-export const wantToRead = "want to read";
+export const currentlyReading = "currentlyReading";
+export const wantToRead = "wantToRead";
 export const read = "read";
 
 export const pretty = (str) =>

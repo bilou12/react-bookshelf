@@ -4,8 +4,12 @@ import { read, wantToRead, currentlyReading, pretty } from "../tools";
 import ListBooks from "./ListBooks";
 import { Link } from "react-router-dom";
 
-const ListUserBooks = ({readBooks, currentlyReadingBooks, toReadBooks, onChangeCategory}) =>
+const HomePage = ({readBooks, currentlyReadingBooks, toReadBooks, onChangeCategory}) =>
 {
+    console.log('readBooks: ' + JSON.stringify(readBooks.map(book => {return book.title})))
+    console.log('currentlyReadingBooks: ' + JSON.stringify(currentlyReadingBooks.map(book => {return book.title})))
+    console.log('toReadBooks: ' + JSON.stringify(toReadBooks.map(book => {return book.title})))
+
     return (
         <div>
             <div>
@@ -13,11 +17,12 @@ const ListUserBooks = ({readBooks, currentlyReadingBooks, toReadBooks, onChangeC
                     Search Book
                 </Link>
             </div>
+            <div className="list-books-title">My Read</div>
             <div>
                 <h1>{pretty(read)}</h1>
                 {readBooks.length !== 0 && (
                     <ListBooks
-                        books={ readBooks }
+                        books={readBooks}
                         onChangeCategory={onChangeCategory}>
                     </ListBooks>
                 )}
@@ -25,7 +30,7 @@ const ListUserBooks = ({readBooks, currentlyReadingBooks, toReadBooks, onChangeC
                 <h1>{pretty(currentlyReading)}</h1>
                 {currentlyReadingBooks.length !== 0 && (
                     <ListBooks
-                        books={ currentlyReadingBooks }
+                        books={currentlyReadingBooks}
                         onChangeCategory={onChangeCategory}>
                     </ListBooks>
                 )}
@@ -33,21 +38,20 @@ const ListUserBooks = ({readBooks, currentlyReadingBooks, toReadBooks, onChangeC
                 <h1>{pretty(wantToRead)}</h1>
                 {toReadBooks.length !== 0 && (
                     <ListBooks
-                        books={ toReadBooks }
+                        books={toReadBooks}
                         onChangeCategory={onChangeCategory}>
                     </ListBooks>
                 )}
-
             </div>
         </div>
     )
 }
 
-ListBooks.propTypes = {
+HomePage.propTypes = {
     readBooks: PropTypes.array.isRequired,
     currentlyReadingBooks: PropTypes.array.isRequired,
     toReadBooks: PropTypes.array.isRequired,
     onChangeCategory: PropTypes.func.isRequired
 };
 
-export default ListUserBooks;
+export default HomePage;

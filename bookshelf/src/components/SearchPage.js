@@ -4,7 +4,7 @@ import ListBooks from "./ListBooks";
 import { Link } from "react-router-dom";
 
 const SearchPage = ({books, onChangeCategory}) =>
-{
+{   
     const [query, setQuery] = useState("");
 
     const updateQuery = (query) => {
@@ -39,24 +39,28 @@ const SearchPage = ({books, onChangeCategory}) =>
                         <span>
                             Now showing {showingBooks.length} of {books.length}
                         </span>
-                        <ListBooks books={showingBooks} onChangeCategory={onChangeCategory}></ListBooks>
+                        <ListBooks
+                            books={showingBooks}
+                            onChangeCategory={onChangeCategory}>
+                        </ListBooks>
                         <button onClick={clearQuery}>Show all</button>
                     </div>
                 )}
                 {showingBooks.length === books.length && (
-                    <ListBooks books={books} onChangeCategory={onChangeCategory}></ListBooks>
+                    <ListBooks
+                        books={books}
+                        onChangeCategory={onChangeCategory}>
+                    </ListBooks>
                 )}
-
             </div>
         </div>
-
   );
 
 }
 
 ListBooks.propTypes = {
-  books: PropTypes.array.isRequired,
-  onChangeCategory: PropTypes.func.isRequired,
+    books: PropTypes.array.isRequired,
+    onChangeCategory: PropTypes.func.isRequired,
 };
 
 export default SearchPage;

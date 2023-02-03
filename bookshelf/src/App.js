@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import ListUserBooks from "./components/ListUserBooks.js";
-import { getAll } from "./BookAPI.js";
-import { currentlyReading, read, wantToRead } from "./tools.js";
+import HomePage from "./components/HomePage.js";
+import * as BooksAPI from "./BookAPI.js";
 import SearchPage from "./components/SearchPage.js";
+import { read, currentlyReading, wantToRead } from "./tools.js";
 
 const App = () => {
   
   const [books, setBooks] = useState([]);
-  const [readBooks, setReadBooks] = useState([]);
-  const [toReadBooks, setToReadBooks] = useState([]);
-  const [currentlyReadingBooks, setCurrentlyReadingBooks] = useState([]);
 
   useEffect(() =>
   {
-    console.log("fetching data from the API");
-    getAll().then(books =>
+    BooksAPI.getAll().then(books =>
     {
       setBooks(books);
     });
@@ -23,25 +19,35 @@ const App = () => {
 
   const handleChangeCategory = (bookId, newCategory) =>
   {
-    let book = books.filter(book => {
-      return book.id === bookId
-    })
-
-    console.log("book: " + JSON.stringify(book))
-
-    if (newCategory === read)
-    {
-      setReadBooks(readBooks.concat(book));
-    }
-    else if (newCategory === currentlyReading)
-    {
-      setCurrentlyReadingBooks(currentlyReadingBooks.concat(book));
-    }
-    else if (newCategory === wantToRead)
-    {
-      setToReadBooks(toReadBooks.concat(book));
-    }
+    const book = books
+      .filter(b => { return b.id === bookId })
+    console.log('will update: ' + JSON.stringify(book) + ' to: ' + newCategory)
+    BooksAPI.update(book, newCategory).then(
+      setBooks(books
+        .map(b =>
+        {
+          if (b.id === bookId) {
+            b["shelf"] = newCategory;
+            console.log('force update: ' + JSON.stringify(b))
+            return b;
+          } else {
+            return b;
+          }
+        }))
+    )
   };
+
+  const readBooks = books.filter(book => {
+      return book.shelf === read
+  })
+
+  const currentlyReadingBooks = books.filter(book => {
+      return book.shelf === currentlyReading
+  })
+
+  const toReadBooks = books.filter(book => {
+      return book.shelf === wantToRead
+  })
 
   return (
     <Routes>
@@ -49,12 +55,12 @@ const App = () => {
         exact
         path="/"
         element={
-          <ListUserBooks
+          <HomePage
             readBooks={readBooks}
             currentlyReadingBooks={currentlyReadingBooks}
             toReadBooks={toReadBooks}
             onChangeCategory={handleChangeCategory}>  
-          </ListUserBooks>}
+          </HomePage>}
       ></Route>
       <Route
         path="/search"
