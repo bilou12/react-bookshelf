@@ -23,36 +23,23 @@ const App = () => {
 
   const handleChangeCategory = (bookId, newCategory) =>
   {
+    let book = books.filter(book => {
+      return book.id === bookId
+    })
+
+    console.log("book: " + JSON.stringify(book))
+
     if (newCategory === read)
     {
-      setReadBooks(
-        books.filter(book =>
-        {
-          return (book.id === bookId);
-        })
-      )
-    } else if (newCategory === currentlyReading)
+      setReadBooks(readBooks.concat(book));
+    }
+    else if (newCategory === currentlyReading)
     {
-      setCurrentlyReadingBooks(
-        books.map(book => {
-        if (book.id === bookId)
-        {
-          console.log("set to currentlyReading" + book)
-          return { ...currentlyReadingBooks, book };
-        }
-      })
-      )
-    } else if (newCategory === wantToRead)
+      setCurrentlyReadingBooks(currentlyReadingBooks.concat(book));
+    }
+    else if (newCategory === wantToRead)
     {
-      setToReadBooks(
-        books.map(book => {
-        if (book.id === bookId)
-        {
-          console.log("set to read" + book)
-          return { ...toReadBooks, book };
-        }
-      })
-      )
+      setToReadBooks(toReadBooks.concat(book));
     }
   };
 
@@ -71,7 +58,11 @@ const App = () => {
       ></Route>
       <Route
         path="/search"
-        element={<SearchPage books={books} onChangeCategory={handleChangeCategory}></SearchPage>}
+        element={
+          <SearchPage
+            books={books}
+            onChangeCategory={handleChangeCategory}>
+          </SearchPage>}
       ></Route>
     </Routes>
   );
