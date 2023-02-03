@@ -5,13 +5,17 @@ import Book from "./Book";
 
 const ListBooks = ({ books, onChangeCategory }) => {
   return (
-    <ol>
-      {books
-        .map(book => (
-          <Book key={book.id} book={book} onChangeCategory={onChangeCategory}></Book>
-        ))
-      }
-    </ol>
+    <div>
+      {books.length !== 0 && (
+      <ol>
+        {books
+          .map(book => (
+            <Book key={book.id} book={book} onChangeCategory={onChangeCategory}></Book>
+          ))
+        }
+      </ol>
+      )}
+    </div>
   );
 }
 

@@ -9,14 +9,16 @@ const Book = ({book, onChangeCategory}) =>
 
     const categories = [noAssigned, read, currentlyReading, wantToRead];
 
-    const handleCategoryChange = event =>
+    const handleCategoryChange = (e) =>
     {
-        setCategory(event.target.value);
-        onChangeCategory(book.id, category);
+        e.preventDefault();
+        setCategory(e.target.value);
+        console.log(book.id + " set to " + e.target.value + " / " + category)
+        onChangeCategory(book.id, e.target.value);
     };
 
     return (
-        <li key={book.id}>
+        <div key={book.id}>
             <h5>{book.title}</h5>
             <img src={book.imageLinks["thumbnail"]} alt={book.title} />
             <p>{book.authors.join(", ")}</p>
@@ -27,8 +29,13 @@ const Book = ({book, onChangeCategory}) =>
                     </option>
                 ))}
             </select>
-        </li>
+        </div>
     )
 }
+
+Book.propTypes = {
+    book: PropTypes.object.isRequired,
+    onChangeCategory: PropTypes.func.isRequired
+};
 
 export default Book;
