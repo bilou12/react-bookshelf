@@ -111,3 +111,9 @@ Books have the same state on both the search page and the main application page:
 - Components in the application are built as functions rather than as classes.
 
 - The code runs without errors. There are no warnings that resulted from not following the best practices listed in the documentation, such as using key for list items, or state update warnings on unmounted components.. All code is functional and formatted properly.
+
+## To go further
+
+- Consider adding a books "detail" page to display more information about any particular book
+- Consider adding sign-up and log-in functionality to allow users to save their bookshelves to their accounts
+- Consider adding drag-and-drop functionality to move books between shelves
