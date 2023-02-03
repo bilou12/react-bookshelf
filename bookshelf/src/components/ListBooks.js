@@ -1,16 +1,20 @@
 import React from "react";
 import PropTypes from 'prop-types'
-import { noAssigned } from "../tools";
 import Book from "./Book";
 
-const ListBooks = ({ books, onChangeCategory }) => {
+const ListBooks = ({ books, onChangeCategory }) =>
+{  
   return (
     <div>
       {books.length !== 0 && (
       <ol>
         {books
-          .map(book => (
-            <Book key={book.id} book={book} onChangeCategory={onChangeCategory}></Book>
+            .map(book => (
+              <Book
+                key={book.id}
+                book={book}
+                onChangeCategory={onChangeCategory}>  
+              </Book>
           ))
         }
       </ol>
